@@ -5,10 +5,11 @@ import tkMessageBox
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
 def get_my_ip_address():
     what_is_my_ip = 'http://www.whatismyip.com/automation/n09230945.asp'
     return urllib.urlopen(what_is_my_ip).readlines()[0]
- 
+
 
 def get_password():
     for keyring in gnomekeyring.list_keyring_names_sync():
@@ -17,7 +18,7 @@ def get_password():
             if item.get_display_name() == 'Mail':
                 return item.get_secret()
 
- 
+
 def send_mail():
     mail_from = '@gmail.com'
     mail_to = '@gmail.com'
