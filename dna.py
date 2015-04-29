@@ -9,7 +9,33 @@ It's usually visualized as a long double helix of base pairs.
 DNA is composed of four bases - adenine, thymine, cytosine, guanine;
 paired as follows: A-T and G-C.
 '''
-pairs = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+PAIRS = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+
+CODONS = {
+    'Ala': ['GCT', 'GCC', 'GCA', 'GCG'],
+    'Arg': ['CGT', 'CGC', 'CGA', 'CGG', 'AGA', 'AGG'],
+    'Asn': ['AAT', 'AAC'],
+    'Asp': ['GAT', 'GAC'],
+    'Cys': ['TGT', 'TGC'],
+    'Gln': ['CAA', 'CAG'],
+    'Glu': ['GAA', 'GAG'],
+    'Gly': ['GGT', 'GGC', 'GGA', 'GGG'],
+    'His': ['CAT', 'CAC'],
+    'Ile': ['ATT', 'ATC', 'ATA'],
+    'Leu': ['TTA', 'TTG', 'CTT', 'CTC', 'CTA', 'CTG'],
+    'Lys': ['AAA', 'AAG'],
+    'Met': ['ATG'],
+    'Phe': ['TTT', 'TTC'],
+    'Pro': ['CCT', 'CCC', 'CCA', 'CCG'],
+    'Ser': ['TCT', 'TCC', 'TCA', 'TCG', 'AGT', 'AGC'],
+    'STOP': ['TAA', 'TAG', 'TGA'],
+    'Thr': ['ACT', 'ACC', 'ACA', 'ACG'],
+    'Trp': ['TGG'],
+    'Tyr': ['TAT', 'TAC'],
+    'Val': ['GTT', 'GTC', 'GTA', 'GTG'],
+}
+PAIRSCODONS = dict((pair, codon) for codon, pairs in CODONS.items()
+                   for pair in pairs)
 
 
 def complementary_strand(strand):
@@ -21,9 +47,23 @@ def complementary_strand(strand):
     'A A T G C C T A T G G C\\nT T A C G G A T A C C G'
     '''
     return '{0}\n{1}'.format(
-        strand, ' '.join([pairs[x] for x in strand if x in pairs])
+        strand, ' '.join([PAIRS[x] for x in strand if x in PAIRS])
     )
 
+
+def translated_protein_sequence(sequence):
+    '''Take a DNA sequence and emit the translated protein sequence.
+    Every generated DNA strand starts with a Met codon and ends with
+    a STOP codon.
+
+    >>> translated_protein_sequence('A T G T T T C G A G G C T A A')
+    'Met Phe Arg Gly STOP'
+    '''
+    proteinSequence = []
+    sequence = sequence.replace(' ', '')  # remove whitespace
+    for basepair in [sequence[i:i+3] for i in range(0, len(sequence), 3)]:
+        proteinSequence.append(PAIRSCODONS[basepair])
+    return ' '.join(proteinSequence)
 
 if __name__ == '__main__':
     import doctest
