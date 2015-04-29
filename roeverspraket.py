@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''Implementation of JSONDecoder
+'''Implementation of the challenge
 
 [2015-04-27] Challenge #212 [Easy] Rövarspråket
 
