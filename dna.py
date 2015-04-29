@@ -34,8 +34,9 @@ CODONS = {
     'Tyr': ['TAT', 'TAC'],
     'Val': ['GTT', 'GTC', 'GTA', 'GTG'],
 }
-PAIRSCODONS = dict((pair, codon) for codon, pairs in CODONS.items()
-                   for pair in pairs)
+# switching the keys and values
+CODONPAIRS = dict((pair, codon) for codon, pairs in CODONS.items()
+                  for pair in pairs)
 
 
 def complementary_strand(strand):
@@ -56,14 +57,21 @@ def translated_protein_sequence(sequence):
     Every generated DNA strand starts with a Met codon and ends with
     a STOP codon.
 
+    Regarding zip(*[iter(sequence)]*3):
+    The left-to-right evaluation order of the iterables is guaranteed.
+    This makes possible an idiom for clustering a data series into
+    n-length groups using zip(*[iter(s)]*n).
+    See https://docs.python.org/3/library/functions.html#zip
+
     >>> translated_protein_sequence('A T G T T T C G A G G C T A A')
     'Met Phe Arg Gly STOP'
     '''
     proteinSequence = []
     sequence = sequence.replace(' ', '')  # remove whitespace
-    for basepair in [sequence[i:i+3] for i in range(0, len(sequence), 3)]:
-        proteinSequence.append(PAIRSCODONS[basepair])
+    for basepair in map(''.join, zip(*[iter(sequence)]*3)):
+        proteinSequence.append(CODONPAIRS[basepair])
     return ' '.join(proteinSequence)
+
 
 if __name__ == '__main__':
     import doctest
