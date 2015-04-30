@@ -9,6 +9,8 @@ It's usually visualized as a long double helix of base pairs.
 DNA is composed of four bases - adenine, thymine, cytosine, guanine;
 paired as follows: A-T and G-C.
 '''
+import collections
+
 PAIRS = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
 
 CODONS = {
@@ -71,6 +73,35 @@ def translated_protein_sequence(sequence):
     for basepair in map(''.join, zip(*[iter(sequence)]*3)):
         proteinSequence.append(CODONPAIRS[basepair])
     return ' '.join(proteinSequence)
+
+
+def kmer(sequence, k):
+    '''A k-mer is a string of length k.
+    We define Count(Text, Pattern) as the number of times that
+    a k-mer Pattern appears as a substring of Text.
+
+    :param sequence: DNA string Text
+    :param k: length of pattern
+    :type k: int
+    :returns: All most frequent k-mers in Text (in any order).
+
+    :TODO: order result
+    >>> kmer('ACGTTGCATGTCGCATGATGCATGAGAGCT', 4)
+    'GCAT CATG'
+    '''
+    # create all possible combinations
+    listed = [sequence[i:i+k] for i in range(0, len(sequence))]
+    max = 0
+    kmers = []
+    for kmer, count in collections.Counter(listed).items():
+        if count > max:
+            max = count
+            kmers = []
+            kmers.append(kmer)
+        elif count == max:
+            kmers.append(kmer)
+            
+    return ' '.join(kmers)
 
 
 if __name__ == '__main__':
