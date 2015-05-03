@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+'''Implementation of various project euler challenges
+
+Solved challenges by id:
+1: Multiplies of 3 and 5
+2: Even Fibonacci numbers
+3: Largest prime factor
+4: in progress - Largest palindrome product
+'''
 import math
 
 

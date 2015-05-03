@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-'''Implementation of the challenge
+'''Implementation of various bioinformatics challenges
 
 [2015-03-23] Challenge #207 [Easy] Bioinformatics 1: DNA Replication
-
+- complementary_strand
 DNA - deoxyribonucleic acid - is the building block of every organism.
 It contains information about hair color, skin tone, allergies, and more.
 It's usually visualized as a long double helix of base pairs.
 DNA is composed of four bases - adenine, thymine, cytosine, guanine;
 paired as follows: A-T and G-C.
+- translated_protein_sequence
+
+http://rosalind.info/problems/list-view/
+- kmer
 '''
 import collections
 
@@ -100,7 +104,7 @@ def kmer(sequence, k):
             kmers.append(kmer)
         elif count == max:
             kmers.append(kmer)
-            
+
     return ' '.join(kmers)
 
 
