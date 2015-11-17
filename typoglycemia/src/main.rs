@@ -15,11 +15,7 @@ fn main() {
 
 /// A scrambled form of the same sentence but with the words first and last letters positions intact.
 fn typoglycemia(text: &str) -> String {
-    let mut shuffled_text = String::new();
-    for word in text.split(' ') {
-        shuffled_text.push_str(&shuffle_word(word));
-    }
-    shuffled_text
+    text.split(' ').map(shuffle_word).collect()
 }
 
 /// Shuffle letters of word but leave first and last letters positions intact.
