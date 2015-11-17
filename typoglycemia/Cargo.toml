@@ -1,0 +1,8 @@
+[package]
+name = "typoglycemia"
+version = "0.1.0"
+authors = ["Martin Stolle <>"]
+
+[dependencies]
+rand = "0.3"
+unicode-segmentation = "0.1.2"
