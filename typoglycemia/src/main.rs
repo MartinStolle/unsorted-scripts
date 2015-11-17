@@ -16,23 +16,16 @@ fn main() {
 /// A scrambled form of the same sentence but with the words first and last letters positions intact.
 fn typoglycemia(text: &str) -> String {
     let mut shuffled_text = String::new();
-    let words: Vec<&str> = text.split(' ').collect();
-    for word in &words {
-        shuffle_word(&mut shuffled_text, &word)
+    for word in text.split(' ') {
+        shuffled_text.push_str(&shuffle_word(word));
     }
     shuffled_text
 }
-/// Shuffle letters of word but leave first and last letters positions intact.
-fn shuffle_word(shuffled_text: &mut String, word: &str) {
-    let mut letters = UnicodeSegmentation::graphemes(word, true).collect::<Vec<&str>>();
-    let length = letters.len() - 1;
-    rand::thread_rng().shuffle(&mut letters[1..length]);
-    build_shuffled_text(shuffled_text, letters);
-}
 
-fn build_shuffled_text(shuffled_text: &mut String, letters: Vec<&str>) {
-    for letter in &letters {
-         shuffled_text.push_str(letter);
-    }
-    shuffled_text.push_str(" ");
+/// Shuffle letters of word but leave first and last letters positions intact.
+fn shuffle_word(word: &str) -> String {
+    let mut letters = UnicodeSegmentation::graphemes(word, true).collect::<Vec<&str>>();
+    let length = letters.len() - 2;
+    rand::thread_rng().shuffle(&mut letters[1..length]);
+    letters.concat() + " "
 }
